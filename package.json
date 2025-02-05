@@ -1,0 +1,26 @@
+{
+  "name": "node-sequelize-project",
+  "version": "1.0.0",
+  "description": "API til en bildatabase",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gllmsb/H1WE010124---NodeSequelizeProject.git"
+  },
+  "author": "L Silvosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gllmsb/H1WE010124---NodeSequelizeProject/issues"
+  },
+  "homepage": "https://github.com/gllmsb/H1WE010124---NodeSequelizeProject#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0",
+    "sequelize": "^6.37.5"
+  }
+}
