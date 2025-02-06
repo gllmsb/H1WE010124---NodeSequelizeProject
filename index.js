@@ -1,11 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { dbController } from './controller/dbController.js'
+import { carController } from './controller/carController.js'
 
 dotenv.config()
 
 const app = express()
-const port = process.env.SERVERPORT || 4000
+const port = process.env.SERVERPORT || 4242
 
 
 //Route to  root
@@ -14,10 +15,10 @@ app.get('/', (req, res) => {
     
 })
 
-app.use(dbController)
+app.use(dbController, carController)
 
 //Route to 404
-app.get('/*', (req, res) => {
+app.get('*', (req, res) => {
     res.send('Could not find file');
     
 })
