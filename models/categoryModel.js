@@ -1,9 +1,9 @@
 import sequelize from "../config/sequelizeClient.js";
 import { Model, DataTypes } from 'sequelize'
 
-export class brandModel extends Model{}
+export class categoryModel extends Model{}
 
-brandModel.init({
+categoryModel.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -11,19 +11,15 @@ brandModel.init({
         primaryKey: true
     },
     name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING, 
         allowNull: false,
-        unique:true
-    },
-    logo_url: {
-        type: DataTypes.STRING,
-        allowNull: false
+        unique: true
     }
 }, {
-    sequelize,
+    sequelize, 
     modelName: "brand",
     underscored: true,
-    freezeTableName: false,
+    freezeTableName: false, 
     createdAt: true,
     updatedAt: true
 })

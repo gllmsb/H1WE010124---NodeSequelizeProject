@@ -97,7 +97,7 @@ carController.delete('/cars/:id([0-9]*)', async (req, res) => {
             });
 
             res.status(200).send({
-                message:`Deleted succesfully`
+                message:`Deleted successfully`
             });
         } catch (error) {
             res.status(500).send({
