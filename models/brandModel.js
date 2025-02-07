@@ -12,8 +12,7 @@ brandModel.init({
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique:true
+        allowNull: false
     },
     logo_url: {
         type: DataTypes.STRING,
@@ -21,7 +20,7 @@ brandModel.init({
     }
 }, {
     sequelize,
-    modelName: "brand",
+    modelName: "products",
     underscored: true,
     freezeTableName: false,
     createdAt: true,

@@ -9,10 +9,6 @@ carModel.init({
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
-    }, 
-    brand: {
-        type: DataTypes.STRING,
-        allowNull: false
     },
     model: {
         type: DataTypes.STRING,

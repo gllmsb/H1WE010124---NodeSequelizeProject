@@ -34,16 +34,14 @@ brandController.get('/brand/:id', async (req, res) => {
 
 //*ROUTE TO CREATE (CREATE)
 brandController.post("/brand", async (req, res) => {
-    const { name, logo_url } = req.body;
+    const { name, logo_url } = req.body; 
 
-    // Validation to ensure both name and logo_url are provided
     if (!name || !logo_url) {
         return res.status(400).json({ message: "Missing data required" });
     }
 
     try {
-        // Corrected: Map logo_url to the logo field in the database
-        const newBrand = await brandModel.create({ name, logo: logo_url });
+        const newBrand = await brandModel.create({ name, logo_url });
         res.status(201).json({ message: "Brand created successfully", brand: newBrand });
     } catch (error) {
         console.error("Error creating brand:", error);
@@ -62,7 +60,7 @@ brandController.put('/brand', async (req, res) => {
     }
     try {
         const result = await brandModel.update({
-            name
+            name, logo_url
         }, {
             where: {id}
         }
