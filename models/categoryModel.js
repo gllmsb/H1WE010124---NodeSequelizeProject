@@ -17,7 +17,7 @@ categoryModel.init({
     }
 }, {
     sequelize, 
-    modelName: "brand",
+    modelName: "category",
     underscored: true,
     freezeTableName: false, 
     createdAt: true,

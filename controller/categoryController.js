@@ -64,7 +64,7 @@ categoryController.put('/category', async (req, res) => {
         })
         
         if( result === 0 ) {
-            return res.status(404).json({ message: "Category not founf or no changes made" })
+            return res.status(404).json({ message: "Category not found or no changes made" })
         }
         return res.status(200).json({ message: "Brand updated successfully"})
     }catch (error) {

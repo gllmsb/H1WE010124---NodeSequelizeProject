@@ -1,21 +1,41 @@
 import express from 'express'
 import { carModel } from '../models/carModel.js'
 import { brandModel } from '../models/brandModel.js'
+import { categoryModel } from '../models/categoryModel.js'
 
 export const carController = express.Router()
 
+//*RELATIONS
 carModel.belongsTo(brandModel, {
     foreignKey: {
         allowNull: false
     }
 })
+
 brandModel.hasMany(carModel)
+
+carModel.belongsTo(categoryModel, {
+    foreignKey: {
+        allowNull: false
+    }
+})
+
+categoryModel.hasMany(carModel)
 
 //*ROUTE TO LIST (GET ALL)
 carController.get('/cars', async (req, res) => {
     try {
         const data = await carModel.findAll({
-            attributes: ['id', 'brand', 'model', 'price', 'color']
+            include: [
+            {
+                model: brandModel, 
+            },
+            {
+                model: categoryModel, 
+                attributes: ['id', 'name']
+            },
+        ]
+            
         })
 
         if(!data || data.length === 0){
@@ -35,7 +55,16 @@ carController.get('/cars/:id([0-9*])', async (req, res) => {
                 where: { 
                     id: id 
                 },
-                attributes: ['id', 'brand', 'model', 'price', 'color']
+                include: [
+                    {
+                        model: brandModel, 
+                        attributes: ['id', 'model', 'price', 'color']
+                    },
+                    {
+                        model: categoryModel, 
+                        attributes: ['id', 'name']
+                    },
+                ]
             })
 
             if(!data) {
@@ -51,15 +80,15 @@ carController.get('/cars/:id([0-9*])', async (req, res) => {
 
 //*ROUTE TO CREATE (CREATE)
 carController.post('/cars', async (req, res) => {
-    const {brand_id:brandId, model, year, price, color} = req.body;
+    const {brand_id: brandId, category_id: categoryId, model, year, price, color} = req.body;
 
-    if(!brandId || !model || !year || !price || !color) {
+    if(!brandId || !categoryId || !model || !year || !price || !color) {
         return res.json({ message: 'Missing required data' })
     }
 
     try {
         const result = await carModel.create({
-            brandId, model, year, price, color
+            brandId, categoryId, model, year, price, color
         })
 
         res.status(201).json(result)
@@ -71,20 +100,20 @@ carController.post('/cars', async (req, res) => {
 
 //*ROUTE TO UPDATE (UPDATE)
 carController.put('/cars', async (req, res) => {
-    const {brand, model, year, price, color, id} = req.body;
+    const {brand_id: brandId, category_id: categoryId, model, year, price, color, id} = req.body;
 
-    if(!id || !brand || !model || !year || !price || !color) {
+    if(!id || !brandId || !categoryId || !model || !year || !price || !color) {
         return res.json({ message: 'Missing required data' })
     }
 
     try {
         const result = await carModel.update({
-            brand, model, year, price, color
+            brandId, categoryId, model, year, price, color
         }, 
             {where: {id}}
         )
 
-        if(result) {
+        if(result[0] === 0) {
             res.json({ message: `Updates id#${id}`})
         }
         res.status(201).json(result)
