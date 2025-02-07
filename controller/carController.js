@@ -1,7 +1,15 @@
 import express from 'express'
 import { carModel } from '../models/carModel.js'
+import { brandModel } from '../models/brandModel.js'
 
 export const carController = express.Router()
+
+carModel.belongsTo(brandModel, {
+    foreignKey: {
+        allowNull: false
+    }
+})
+brandModel.hasMany(carModel)
 
 //*ROUTE TO LIST (GET ALL)
 carController.get('/cars', async (req, res) => {
@@ -43,15 +51,15 @@ carController.get('/cars/:id([0-9*])', async (req, res) => {
 
 //*ROUTE TO CREATE (CREATE)
 carController.post('/cars', async (req, res) => {
-    const {brand, model, year, price, color} = req.body;
+    const {brand_id:brandId, model, year, price, color} = req.body;
 
-    if(!brand || !model || !year || !price || !color) {
+    if(!brandId || !model || !year || !price || !color) {
         return res.json({ message: 'Missing required data' })
     }
 
     try {
         const result = await carModel.create({
-            brand, model, year, price, color
+            brandId, model, year, price, color
         })
 
         res.status(201).json(result)
